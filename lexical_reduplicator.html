@@ -1,84 +1,17 @@
 ﻿<!DOCTYPE HTML>
-<!-- Lift page -->
-<html style="background-image: url(&quot;images/blur.jpg&quot;); background-color: lightblue;">
+<html>
 <head>
-<link rel="icon" type="image/png" href="/images/icon.png" sizes="16x16">
-  <meta charset="utf-8">
-
+<link rel="icon" type="image/png" href="images/icon.png" sizes="16x16">
+<link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<script language="JavaScript" type = "text/javascript" src="js/reduplicator.js" charset="CP1251"></script>
 <title> Лексический редупликатор</title>
- </head>
-<body>	
-<h1 style="font-family: Geneva,Arial,Helvetica,sans-serif;color: white" align="center">Охуительный сервис</h1>
-
-	<p align = "center">	
-	<input style="
-		width: 300px; 
-		height: 50px; 
-		font-size: 24px; 
-		text-align: center; 
-		font-family: monospace; 
-		border: 1px solid rgb(255, 255, 255); 
-		background-color: rgba(255, 0, 0, 0.13); 
-		color: white;" 
-	id="sms" align="middle" type="text" placeholder="Введите текст">
-	
-	<p align = "center"  font-size = "20px">
-	<span style="font-size: 72px; color: white"  id="result">хуервис</span>
-
-
-<script>
-	var timerId;
-	var delay = 70;
-	sms.onfocus = function() {
-		var lastValue = sms.value;
-		timerId = setInterval(function() {
-			if (sms.value != lastValue) {
-				show();
-				lastValue = sms.value;
-			}
-		}, delay);
-	};
-
-	sms.onblur = function() {
-		clearInterval(timerId);
-	};
-  
-	var vowels = "аоуэыяёюеи";
-
-	var isVowel = function (c) {
-		for ( i = 0; i < vowels.length; ++i) if (vowels[i] == c) {
-			return true;
-		}
-		return false;
-	};
-
-	var transform = function (str) {
-	console.log("transform");
-		var reduplicate = function (str) {
-			for (var i = 0; i < 5; ++i) if (str[0] == vowels[i]) {
-				return vowels[i+5] + str.substring(1);
-			}
-			return  str;
-		};	
-		for (var i = 0; i < 4; ++i) {
-			if (isVowel(str[i])) break;
-		}
-		return "ху" + reduplicate(str.substring(i));
-	}; 
-  
-
-	function show() {
-		if (sms.value.length > 0) {
-			if (sms.value == "путин") result.innerHTML = "Путин";
-			else if (sms.value == "Путин") result.innerHTML = "Путин";
-			else {
-				result.innerHTML = transform(sms.value.toLowerCase());
-			}
-		}
-		else result.innerHTML = sms.value;
-	}
-	
-</script>
-
+</head>
+<body>
+  <h1 align="center">Охуительный сервис</h1>
+  <div align = "center">
+	<input id="sms" title="Только русские буквы" autofocus="autofocus" pattern="^[А-Яа-яЁё\s]+$">
+	<p font-size = "20px"></p> <span id="result">хуервис</span>
+  </div>
 </body>
 </html>
