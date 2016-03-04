@@ -1,54 +1,73 @@
-window.onload = function() {
+	//document.onload = function() {
 	var timerId;
 	var delay = 700;
 	var vowels = "àîóýûÿ¸þåè";
-	var sms = document.getElementById('sms');
+	var input = document.getElementById('userInput');
 	
-	sms.onfocus = function() {	
-		var lastValue = sms.value;
+	var userLang = navigator.language || navigator.userLanguage; 
+	var keyword = "";
+	
+	if  (userLang === "ru") {
+		keyword = "õó";
+	}
+	else {
+		keyword = "dick";
+	}
+	
+	
+	console.log(userLang);
+
+	input.onfocus = function() {	
+		var lastValue = input.value;
 		timerId = setInterval(function() {
-			if (sms.value != lastValue) {
-			show();
-			lastValue = sms.value;
+			if (input.value != lastValue) {
+				show();
+				lastValue = input.value;
 			}
 		}, delay);
 	};
 
-	sms.onblur = function() {
+	input.onblur = function() {
 		clearInterval(timerId);
 	};
 
 
 	var isVowel = function (c) {
-		for (i = 0; i < vowels.length; ++i) if (vowels[i] == c) {
-			return true;
-		}
+		for (i = 0; i < vowels.length; ++i) 
+			if (vowels[i] == c) {
+				return true;
+			}
 		return false;
 	};
 
 	var transform = function (str) {
-		var reduplicate = function (str) {
-			for (var i = 0; i < 5; ++i) if (str[0] == vowels[i]) {
-				return vowels[i+5] + str.substring(1);
-			}  
-			return  str;
-		};	
-		for (var i = 0; i < 4; ++i) {
-			if (isVowel(str[i])) break;
+		var result = keyword;
+		if (userLang === "ru") {  // refactory me please
+			var reduplicate = function (str) { 
+				for (var i = 0; i < 5; ++i)
+					if (str[0] == vowels[i]) {
+						return vowels[i+5] + str.substring(1); 
+					}  
+				return  str;
+			};	
+			for (var i = 0; i < 4; ++i) {
+				if (isVowel(str[i])) break;
+			}
+		result += reduplicate(str.substring(i));
 		}
-		return "õó" + reduplicate(str.substring(i));
+		else { //...please
+			result += str;
+		}
+		return result;
 	}; 
 
 
 	function show() {
-		var result = document.getElementById("result");
-		fx.speedyDrop(result);
-	
-		if (sms.value.length > 0) {
+		if (input.value.length > 0) {
 			if (timerId > 0) {
-				result.innerHTML = transform(sms.value.toLowerCase());
+				result.innerHTML = transform(input.value.toLowerCase());
 			}
 		}
 		else result.innerHTML = "";
 	}
-}
+//}
